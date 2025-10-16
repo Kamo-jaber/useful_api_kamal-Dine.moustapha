@@ -17,7 +17,7 @@ class CheckModuleActive
     {
         // dd($request->user());
         if (!$request->user_modules() || !$request->user_modules()->active) {
-            return response()->json(['message' => 'Access denied. User_module active only'], 403);
+            return response()->json(["error" => "Module inactive. Please activate this module to use it."], 403);
         }
         return $next($request);
     }
