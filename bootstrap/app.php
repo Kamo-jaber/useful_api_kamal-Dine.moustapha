@@ -15,4 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })->create()
+
+    ->withMiddleware(function (Middleware $middleware): void {
+
+     $middleware->append(CheckModuleActive::class);
+
+});
