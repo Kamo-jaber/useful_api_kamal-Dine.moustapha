@@ -47,5 +47,9 @@ class User_module extends Model
     public function module() {
         return $this->belongsTo(Module::class,'module_id');
     }
+
+    //  public function likes(): HasMany {
+    //         return $this->hasMany(Like::class,'comment_id');
+    //     }
 }
 
