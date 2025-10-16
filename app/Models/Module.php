@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Module extends Model
 {
@@ -37,4 +38,9 @@ class Module extends Model
     // {
     //  //
     // }
+
+    public function users()
+    {
+        return $this->belongsToMany(Module::class)->withPivot('active')->using(User_Module::class);
+    }
 }

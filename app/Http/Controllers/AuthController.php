@@ -19,7 +19,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email:rfc,dns', 'max:255', 'unique:'.User::class],
-            'password' => ['required'],
+            'password' => ['required',  'min:8'],
         ]);
 
         //insertion dans la base de donner
@@ -60,26 +60,14 @@ class AuthController extends Controller
 
         $validate = Validator::make($request->all(), [
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required'],
+            'password' => ['required', 'min:8'],
         ]);
-
-        // if(!Auth::attempt($validate)) {
-
-        //     return response()->json([
-        //         "message"=> "User error: Bad params"
-        //     ], 401);
-        // }
-
-        // return response()->json([
-        //         "token" => auth()->user()->createToken("access_token")->plainTextToken,
-        //         "user_id" => auth()->user()->id
-        //     ], 200);
 
         if (!$validate) {
 
             return response()->json([
                 "message"=> "User error: Bad params"
-            ], 400);
+            ], 401);
         } else {
 
             $user = User::where("email", "=", $request->email)->first();
@@ -90,7 +78,7 @@ class AuthController extends Controller
 
                     return response()->json([
                         "message"=> "User error: Bad params"
-                    ], 400);
+                    ], 401);
                 }
 
                 $token = $user->createToken("access_token");
