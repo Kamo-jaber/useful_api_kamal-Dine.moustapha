@@ -12,6 +12,6 @@ use App\Http\Controllers\AuthController;
 Route::prefix('v1')->group( function() {
 
     Route::post('/register', [AuthController::class, 'addusers']);
-     Route::post('/login', [AuthController::class, 'addusers']);
+    Route::post('/login', [AuthController::class, 'login']);
 
 });

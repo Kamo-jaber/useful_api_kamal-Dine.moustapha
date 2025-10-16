@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Validation\Rules;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -59,8 +60,20 @@ class AuthController extends Controller
 
         $validate = Validator::make($request->all(), [
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', Rules\Password::defaults()],
+            'password' => ['required'],
         ]);
+
+        // if(!Auth::attempt($validate)) {
+
+        //     return response()->json([
+        //         "message"=> "User error: Bad params"
+        //     ], 401);
+        // }
+
+        // return response()->json([
+        //         "token" => auth()->user()->createToken("access_token")->plainTextToken,
+        //         "user_id" => auth()->user()->id
+        //     ], 200);
 
         if (!$validate) {
 
@@ -83,8 +96,8 @@ class AuthController extends Controller
                 $token = $user->createToken("access_token");
 
                 return response()->json([
-                    "user"=>$user,
-                    "access_token"=>$token->plainTextToken
+                    "access_token"=>$token->plainTextToken,
+                    "user_id"=>$user->id,
                 ], 200);
             } else {
 
