@@ -39,8 +39,8 @@ class Module extends Model
     //  //
     // }
 
-    public function users()
+    public function userModule()
     {
-        return $this->belongsToMany(Module::class)->withPivot('active')->using(User_Module::class);
+        return $this->hasMany(UserModule::class);
     }
 }

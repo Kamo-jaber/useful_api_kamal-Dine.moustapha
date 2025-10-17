@@ -2,39 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User_module;
+use App\Models\Module;
+use App\Models\UserModule;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserModuleController extends Controller
 {
 
     //logic d'activation
 
-    public function activeModule($id): JsonResponse
+    public function activeModule($moduleId): JsonResponse
     {
-        $module = User_module::find($id);
+        // verifier que l'utilisateur est connecter
+        $user = Auth::User();
+        //verifier que le module existe
+
+        $module = Module::find($moduleId);
 
     if (!$module) {
         return response()->json(['message' => 'Module inexistant'], 404);
     };
 
-    $module->active = true;
-    $module->save();
+    //faire une mise à jour de la table usermodule
 
-    return response()->json(['message' => 'User promoted to admin'], 200);
+    $userModule = UserModule::updateOrCreate(
+
+        ['user_id'=>$user->id, 'module_id'=>$module],
+        ['active' => true,]
+
+    );
+
+    return response()->json(['message' => 'Module activer avec succes'], 200);
     }
 
-     public function desactiveModule($id): JsonResponse
+        public function desactiveModule($moduleId): JsonResponse
     {
-        $module = User_module::find($id);
+        // verifier que l'utilisateur est connecter
+        $user = Auth::User();
+        //verifier que le module existe
+
+        $module = Module::find($moduleId);
 
     if (!$module) {
         return response()->json(['message' => 'Module inexistant'], 404);
     };
 
-    $module->active = false;
-    $module->save();
+    //faire une mise à jour de la table usermodule
 
-    return response()->json(['message' => 'User promoted to admin'], 200);
+    $userModule = UserModule::where('user_id', $user->id,)
+                            ->where('module_id', $module)->first();
+
+    if(!$userModule) {
+        return response()->json(['message' => 'Module inexistant'], 404);
+    }
+
+   $userModule->update(['active' => false,]);
+
+
+    return response()->json(['message' => 'Module activer avec succes'], 200);
     }
 }

@@ -46,9 +46,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    //un utilisqteur peut qvoir plusieurs modules
 
-    public function modules()
+        public function userModule()
     {
-        return $this->belongsToMany(User::class)->withPivot('active')->using(User_Module::class);
+        return $this->hasMany(UserModule::class);
+    }
+
+    //avoir accès directement aux modules activé
+
+        public function activeModule()
+    {
+        return $this->hasMany(UserModule::class)->where('active', 'true')->with('module');
     }
 }
