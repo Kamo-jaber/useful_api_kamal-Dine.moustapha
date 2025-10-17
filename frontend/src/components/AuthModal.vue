@@ -43,6 +43,8 @@ await authStore.SignUp({
 <!-- LOGIN -->
 
 <!-- Main modal -->
+
+<router-link></router-link>
 <div v-if="!openlogin"  class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[10px] bg-gray-900/60">
         <div class="relative p-4 w-full max-w-md max-h-full">
         <!-- Modal content -->

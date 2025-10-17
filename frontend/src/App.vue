@@ -3,8 +3,8 @@ import DashBoard from '@/views/DashBoard.vue';
 </script>
 
 <template>
-<DashBoard/>
 <RouterView/>
+<DashBoard/>
 </template>
 
 <style scoped>
