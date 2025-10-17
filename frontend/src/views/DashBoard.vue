@@ -1,10 +1,11 @@
 <script setup>
-import DashBoard from '@/views/DashBoard.vue';
+import AuthModal from '@/components/AuthModal.vue';
+
+
 </script>
 
 <template>
-<DashBoard/>
-<RouterView/>
+<AuthModal/>
 </template>
 
 <style scoped>

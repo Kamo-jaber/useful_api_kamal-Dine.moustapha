@@ -13,8 +13,8 @@ use App\Http\Controllers\UserModuleController;
 
 Route::prefix('v1')->group( function() {
 
-    Route::post('/register', [AuthController::class, 'addusers']);
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/auth/register', [AuthController::class, 'addusers'])->name('register');
+    Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
 
 

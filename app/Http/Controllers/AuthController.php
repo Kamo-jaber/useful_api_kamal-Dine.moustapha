@@ -40,18 +40,18 @@ class AuthController extends Controller
                 "data" => $user
             ], 201);
 
-            // $responseUser = User::where("email", "=", $request->email)->first();
+            $responseUser = User::where("email", "=", $request->email)->first();
 
-            // event(new Registered($user));
+            event(new Registered($user));
 
-            // Auth::login($user);
+            Auth::login($user);
 
-            // $token = $user->createToken('access_token');
+            $token = $user->createToken('access_token');
 
-            // return response()->json([
-            //     "access_token"=> $token->plainTextToken,
-            //     "user" => $responseUser
-            // ], 201);
+            return response()->json([
+                "access_token"=> $token->plainTextToken,
+                "user" => $responseUser
+            ], 201);
         }
     }
 
